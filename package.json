@@ -29,8 +29,7 @@
     "test": "react-scripts test",
     "build": "cross-env CI=true yarn test && react-scripts build",
     "build:dev": "sh -ac '. .env.development; yarn build'",
-    "deploy": "firebase use qa-ui && yarn version && yarn build && yarn deploy:hosting",
-    "deploy:dev": "firebase use qa-ui-dev && yarn build:dev && yarn deploy:hosting",
+    "deploy": "firebase use dawahdevs-qa-ui && yarn version && yarn build && yarn deploy:hosting",
     "deploy:hosting": "firebase deploy --only hosting:dd-qa-ui"
   },
   "eslintConfig": {
