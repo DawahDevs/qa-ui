@@ -1,0 +1,22 @@
+@import-normalize;
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+#root {
+  &,
+  & > div,
+  & > div > .state {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
+#download {
+  display: none;
+}
