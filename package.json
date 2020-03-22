@@ -31,7 +31,7 @@
     "build:dev": "sh -ac '. .env.development; yarn build'",
     "deploy": "firebase use qa-ui && yarn version && yarn build && yarn deploy:hosting",
     "deploy:dev": "firebase use qa-ui-dev && yarn build:dev && yarn deploy:hosting",
-    "deploy:hosting": "firebase deploy --only hosting"
+    "deploy:hosting": "firebase deploy --only hosting:dd-qa-ui"
   },
   "eslintConfig": {
     "extends": "react-app"
