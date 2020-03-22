@@ -1,4 +1,3 @@
-import { firestore, GeoPoint, FieldValue, Timestamp } from 'config/firebase'
 import { ERROR_TYPE } from 'constants/types'
 import Types from './types'
 
@@ -378,152 +377,6 @@ describe('utils/types', () => {
     })
   })
 
-  describe('timestamp', () => {
-    test('timestamp', () => {
-      const actual = Types.timestamp(new Timestamp(0, 0))
-      const expected = true
-
-      expect(actual).toBe(expected)
-    })
-
-    test('default', () => {
-      const actual = Types.timestamp(undefined, new Timestamp(0, 0))
-      const expected = true
-
-      expect(actual).toBe(expected)
-    })
-
-    test('server timestamp', () => {
-      const actual = Types.timestamp(FieldValue.serverTimestamp())
-      const expected = true
-
-      expect(actual).toBe(expected)
-    })
-
-    test('date', () => {
-      const actual = Types.timestamp(new Date())
-      const expected = true
-
-      expect(actual).toBe(expected)
-    })
-
-    test('number', () => {
-      const actual = Types.timestamp(0)
-      const expected = false
-
-      expect(actual).toBe(expected)
-    })
-
-    test('undefined', () => {
-      const actual = Types.timestamp(undefined)
-      const expected = false
-
-      expect(actual).toBe(expected)
-    })
-
-    test('timestamp strict', () => {
-      const actual = Types.timestamp.strict(new Timestamp(0, 0))
-      const expected = true
-
-      expect(actual).toBe(expected)
-    })
-
-    test('timestamp strict (fails)', () => {
-      const actual = Types.timestamp.strict(new Date())
-      const expected = false
-
-      expect(actual).toBe(expected)
-    })
-  })
-
-  describe('geopoint', () => {
-    test('geopoint', () => {
-      const actual = Types.geopoint(new GeoPoint(0, 0))
-      const expected = true
-
-      expect(actual).toBe(expected)
-    })
-
-    test('default', () => {
-      const actual = Types.geopoint(undefined, new GeoPoint(0, 0))
-      const expected = true
-
-      expect(actual).toBe(expected)
-    })
-
-    test('object with long and lat', () => {
-      const actual = Types.geopoint({ long: 0, lat: 0 })
-      const expected = true
-
-      expect(actual).toBe(expected)
-    })
-
-    test('function', () => {
-      const actual = Types.geopoint(function () {})
-      const expected = false
-
-      expect(actual).toBe(expected)
-    })
-
-    test('object', () => {
-      const actual = Types.geopoint({})
-      const expected = false
-
-      expect(actual).toBe(expected)
-    })
-  })
-
-  describe('ref', () => {
-    test('doc', () => {
-      const actual = Types.ref(firestore.collection('TEST').doc())
-      const expected = true
-
-      expect(actual).toBe(expected)
-    })
-
-    test('default', () => {
-      const actual = Types.ref(undefined, firestore.collection('TEST').doc())
-      const expected = true
-
-      expect(actual).toBe(expected)
-    })
-
-    test('doc with ref collection', () => {
-      const actual = Types.ref('TEST')(firestore.collection('TEST').doc())
-      const expected = true
-
-      expect(actual).toBe(expected)
-    })
-
-    test('doc with ref collection failed', () => {
-      const actual = Types.ref('TESTA')(firestore.collection('TESTB').doc())
-      const expected = false
-
-      expect(actual).toBe(expected)
-    })
-
-    test('string returns function', () => {
-      const actual = Types.ref('TEST')
-      const expected = 'function'
-
-      expect(typeof actual).toBe(expected)
-    })
-
-    test('ref strict', () => {
-      const actual = Types.ref.strict(firestore.collection('TEST').doc())
-      const expected = true
-
-      expect(actual).toBe(expected)
-    })
-
-    test('ref strict (fails)', () => {
-      const actual = Types.ref.strict()
-      const expected = false
-
-      expect(actual).toBe(expected)
-    })
-  })
-
   describe('oneOf', () => {
     test('array of numbers', () => {
       const actual = Types.oneOf([1, 2, 3])(1)
@@ -620,10 +473,6 @@ describe('utils/types', () => {
   })
 
   test('advanced', () => {
-    const now = new Date()
-    const here = new GeoPoint(0, 0)
-    const user = firestore.collection('users').doc()
-
     const shape = Types.map.shape(
       {
         admin: Types.boolean,
@@ -631,14 +480,11 @@ describe('utils/types', () => {
         inactive: Types.oneOfType([Types.boolean, Types.undefined]),
         name: Types.string,
         age: Types.number,
-        accountCreatedOn: Types.timestamp,
-        employmentLocation: Types.geopoint,
         rating: Types.number.range(0, 10),
         relatives: Types.array.of(
           Types.map.shape({
             name: Types.string,
             age: Types.number,
-            ref: Types.ref('users'),
           })
         ),
       },
@@ -648,13 +494,7 @@ describe('utils/types', () => {
         age: 30,
         rating: 10,
         relatives: {
-          ref: user,
-        },
-        accountCreatedOn: (accountCreatedOn = now) => {
-          return accountCreatedOn
-        },
-        employmentLocation: (employmentLocation = here) => {
-          return employmentLocation
+          age: 23,
         },
       }
     )
@@ -665,7 +505,6 @@ describe('utils/types', () => {
       relatives: [
         {
           name: 'Abdelrahman Salem',
-          age: 24,
           log: true,
         },
       ],
@@ -677,13 +516,10 @@ describe('utils/types', () => {
       age: 30,
       rating: 10,
       name: 'Abdelrahman Salem',
-      accountCreatedOn: now,
-      employmentLocation: here,
       relatives: [
         {
           name: 'Abdelrahman Salem',
-          age: 24,
-          ref: user,
+          age: 23,
         },
       ],
     }

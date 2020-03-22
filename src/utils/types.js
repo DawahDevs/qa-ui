@@ -1,4 +1,3 @@
-import { Timestamp, GeoPoint, DocumentReference } from 'config/firebase'
 import { ERROR_TYPE } from 'constants/types'
 import isPlainObject from 'is-plain-object'
 
@@ -81,51 +80,6 @@ Types.array = Types.createType((prop) => {
 })
 
 Types.array._name_ = 'array'
-
-/**
-| ------------------
-| Firebase Primitives
-| ------------------
-*/
-
-Types.timestamp = Types.createType((prop) => {
-  try {
-    return (
-      prop instanceof Date ||
-      prop instanceof Timestamp ||
-      prop._methodName === 'FieldValue.serverTimestamp'
-    )
-  } catch (e) {
-    return false
-  }
-})
-
-Types.timestamp._name_ = 'timestamp'
-
-Types.geopoint = Types.createType((prop) => {
-  try {
-    return (
-      (typeof prop.long === 'number' && typeof prop.lat === 'number') ||
-      prop instanceof GeoPoint
-    )
-  } catch (e) {
-    return false
-  }
-})
-
-Types.geopoint._name_ = 'geopoint'
-
-Types.ref = Types.createType((prop) => {
-  if (typeof prop === 'string') {
-    return Types.createType((ref) => {
-      return ref instanceof DocumentReference && ref.parent.id === prop
-    })
-  }
-
-  return prop instanceof DocumentReference
-})
-
-Types.ref._name_ = 'ref'
 
 /**
 | ------------------
@@ -305,22 +259,6 @@ Types.map.shape = (rules, userResolvers = {}) => {
 }
 
 Types.map.shape._name_ = 'map.shape'
-
-Types.timestamp.strict = Types.createType((prop) => {
-  try {
-    return prop instanceof Timestamp
-  } catch (e) {
-    return false
-  }
-})
-
-Types.timestamp.strict._name_ = 'timestamp.strict'
-
-Types.ref.strict = Types.createType((prop) => {
-  return prop instanceof DocumentReference
-})
-
-Types.ref.strict._name_ = 'ref.strict'
 
 /**
 | ------------------
