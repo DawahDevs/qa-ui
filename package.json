@@ -25,9 +25,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "cross-env CI=true yarn test && react-scripts build",
+    "build:dev": "sh -ac '. .env.development; yarn build'",
+    "deploy": "firebase use qa-ui && yarn version && yarn build && yarn deploy:hosting",
+    "deploy:dev": "firebase use qa-ui-dev && yarn build:dev && yarn deploy:hosting",
+    "deploy:hosting": "firebase deploy --only hosting"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -46,10 +49,28 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "faker": "^4.1.0",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.8",
     "node-sass": "^4.13.1",
     "prettier": "^2.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,scss,md,html,xml}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@anew|@babel/runtime))"
+    ]
   }
 }

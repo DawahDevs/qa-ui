@@ -1,5 +1,40 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Q&A
+
+Question and Answer Platform as a Service
+
+## Setup Development Environment
+
+### Installations
+
+1. [Yarn v1.12.3](https://yarnpkg.com/en/)
+2. [Node v8.10.0](https://nodejs.org/en/)
+3. [Google Chrome](https://www.google.com/chrome/)
+4. [iTerm 2](https://www.iterm2.com/)
+5. [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh)
+6. [Visual Studio Code](https://code.visualstudio.com/)
+
+Then install application dependencies with `yarn`:
+
+```
+➜  rms git:(master) yarn
+```
+
+### Visual Studio Code Extensions
+
+1. [Ayu Theme](https://marketplace.visualstudio.com/items?itemName=teabyii.ayu)
+2. [Firebase](https://marketplace.visualstudio.com/items?itemName=toba.vsfire)
+3. [Project Manager](https://marketplace.visualstudio.com/items?itemName=alefragnani.project-manager)
+4. [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+5. [Rainbow Brackets](https://marketplace.visualstudio.com/items?itemName=2gua.rainbow-brackets)
+6. [TODO Highlight](https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight)
+7. [TODO Tree](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree)
+8. [Fira Code](https://github.com/tonsky/FiraCode/wiki/VS-Code-Instructions)
+
+To install FireCode Font go [here](https://github.com/tonsky/FiraCode)
+Select **AYU Mirage** Theme for best view
+
 ## Available Scripts
 
 In the project directory, you can run:
