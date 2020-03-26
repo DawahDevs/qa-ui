@@ -6,7 +6,9 @@ import './Entry.scss'
 
 class Entry extends Component {
   render() {
-    return <State>Hello, World!</State>
+    const { RouterView } = this.props
+
+    return <State>{RouterView()}</State>
   }
 }
 
